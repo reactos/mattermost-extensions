@@ -1,30 +1,31 @@
 <?php
-header('Content-Type: application/json');
 
-$arg = isset($_POST['text']) ? $_POST['text'] : '';
-$token = isset($_POST['token']) ? $_POST['token'] : '';
-$user = isset($_POST['user_name']) ? $_POST['user_name'] : '';
+require_once('mattermost.php');
 
-$response_type = 'ephemeral';
-$response_text = 'Invalid token';
-
-$configs = include('config.php');
-
-if ($token == $configs->jira_token)
+class Jira extends Mattermost
 {
-    if (preg_match('/^(ARWINSS|CORE|ROSBE|ONLINE|ROSTESTS|ROSAPPS)-[0-9]+$/i', $arg))
+    function validate()
     {
-        $response_text = "Url requested by $user: https://jira.reactos.org/browse/$arg";
-        $response_type = "in_channel";
+        // Validate the token
+        if (!parent::validate())
+            return false;
+
+        // Do our own validation
+        if (!preg_match('/^(ARWINSS|CORE|ROSBE|ONLINE|ROSTESTS|ROSAPPS)-[0-9]+$/i', $this->arg))
+        {
+            $this->result['text'] = 'Invalid issue ID';
+            return false;
+        }
+        return true;
     }
-    else
+
+    function process($user, $arg)
     {
-        $response_text = "Invalid issue ID";
+        $this->result['text'] = "Url requested by $user: https://jira.reactos.org/browse/$arg";
+        $this->result['response_type'] = "in_channel";
     }
 }
+
+(new Jira)->run();
 
 ?>
-{
-    "response_type": "<?php echo $response_type; ?>",
-    "text": "<?php echo $response_text; ?>"
-}

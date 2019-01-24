@@ -1,0 +1,7 @@
+<?php
+
+return (object) array(
+    'jira_token' => '<YOUR MATTERMOST TOKEN HERE>',
+);
+
+?>

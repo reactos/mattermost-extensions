@@ -1,6 +1,6 @@
 <?php
 
-require_once('mattermost.php');
+require_once('./mattermost.php');
 
 class Jira extends Mattermost
 {
@@ -28,4 +28,3 @@ class Jira extends Mattermost
 
 (new Jira)->run();
 
-?>

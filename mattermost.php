@@ -6,14 +6,18 @@ abstract class Mattermost
     protected $text;
     protected $user;
     protected $config;
+    protected $post;
+    protected $get;
     protected $result = array();
 
-    function __construct()
+    function __construct($post = null, $get = null)
     {
-        $this->config = include_once('config.php');
-        $this->arg = isset($_POST['text']) ? $_POST['text'] : '';
-        $this->token = isset($_POST['token']) ? $_POST['token'] : '';
-        $this->user = isset($_POST['user_name']) ? $_POST['user_name'] : '';
+        $this->post = $post ?? $_POST;
+        $this->get = $get ?? $_GET;
+        $this->arg = isset($this->post['text']) ? $this->post['text'] : '';
+        $this->token = isset($this->post['token']) ? $this->post['token'] : '';
+        $this->user = isset($this->post['user_name']) ? $this->post['user_name'] : '';
+        $this->config = require('./config.php');
         $this->result['response_type'] = 'ephemeral';
         $this->result['text'] = '<No output>';
     }
@@ -36,16 +40,13 @@ abstract class Mattermost
         {
             $this->process($this->user, $this->arg);
         }
-        $this->output();
-    }
-
-    abstract function process($user, $arg);
-
-    function output()
-    {
+        if (defined("mattermost_plugin_test"))
+        {
+            return $this->result;
+        }
         header('Content-Type: application/json');
         echo json_encode($this->result);
     }
-}
 
-?>
+    abstract function process($user, $arg);
+}

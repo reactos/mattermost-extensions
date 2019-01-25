@@ -1,7 +1,7 @@
 <?php
 
 return array(
-    'jira_token' => '<YOUR MATTERMOST TOKEN HERE>',
+    'jira_token' => '<YOUR MATTERMOST COMMAND TOKEN HERE>',
+    'translate_token' => array('<YOUR MATTERMOST COMMAND TOKEN1 HERE>', '<YOUR MATTERMOST COMMAND TOKEN2 HERE>'),
 );
 
-?>

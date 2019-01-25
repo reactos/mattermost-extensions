@@ -12,21 +12,33 @@ abstract class Mattermost
 
     function __construct($post = null, $get = null)
     {
-        $this->post = $post ?? $_POST;
-        $this->get = $get ?? $_GET;
-        $this->arg = isset($this->post['text']) ? $this->post['text'] : '';
-        $this->token = isset($this->post['token']) ? $this->post['token'] : '';
-        $this->user = isset($this->post['user_name']) ? $this->post['user_name'] : '';
+        $this->post_arg = $post ?? $_POST;
+        $this->get_arg = $get ?? $_GET;
+        $this->arg = trim($this->post('text'));
+        $this->token = $this->post('token');
+        $this->user = $this->post('user_name');
         $this->config = require('./config.php');
         $this->result['response_type'] = 'ephemeral';
         $this->result['text'] = '<No output>';
+    }
+
+    function get($name)
+    {
+        return isset($this->get_arg[$name]) ? $this->get_arg[$name] : '';
+    }
+
+    function post($name)
+    {
+        return isset($this->post_arg[$name]) ? $this->post_arg[$name] : '';
     }
 
     function validate()
     {
         $outer_name = strtolower(get_class($this));
         $expect_token = $this->config[$outer_name . '_token'];
-        if ($this->token != $expect_token)
+        if (!is_array($expect_token))
+            $expect_token = array($expect_token);
+        if (!in_array($this->token, $expect_token))
         {
             $this->result['text'] = 'Invalid token';
             return false;

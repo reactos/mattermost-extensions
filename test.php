@@ -39,10 +39,64 @@ $tests = array(
         'post' => array('token' => $config['jira_token'], 'text' => 'CORE-1', 'user_name' => 'test'),
         'expect' => array('text' => 'Url requested by test: https://jira.reactos.org/browse/CORE-1')
     ),
+
+    array(
+        'name' => 'Translate',
+        'post' => array(),
+        'expect' => array('text' => 'Invalid token')
+    ),
+    array(
+        'name' => 'Translate',
+        'post' => array('token' => $config['translate_token'][0]),
+        'expect' => array('text' => 'Invalid command')
+    ),
+    array(
+        'name' => 'Translate',
+        'post' => array('token' => $config['translate_token'][0]),
+        'get' => array('cmd' => 'error'),
+        'expect' => array('text' => 'Not a number')
+    ),
+    array(
+        'name' => 'Translate',
+        'post' => array('token' => $config['translate_token'][0], 'text' => 'a'),
+        'get' => array('cmd' => 'error'),
+        'expect' => array('text' => 'Not a number')
+    ),
+    array(
+        'name' => 'Translate',
+        'post' => array('token' => $config['translate_token'][0], 'text' => '0'),
+        'get' => array('cmd' => 'error'),
+        'expect' => array('text' => "@, 0 could be:\n\tERROR_SUCCESS\n\tSTATUS_SUCCESS\n\tSTATUS_WAIT_0\n\tS_OK")
+    ),
+    array(
+        'name' => 'Translate',
+        'post' => array('token' => $config['translate_token'][0], 'text' => '0x0'),
+        'get' => array('cmd' => 'error'),
+        'expect' => array('text' => "@, 0x0 could be:\n\tERROR_SUCCESS\n\tSTATUS_SUCCESS\n\tSTATUS_WAIT_0\n\tS_OK")
+    ),
+    array(
+        'name' => 'Translate',
+        'post' => array('token' => $config['translate_token'][0], 'text' => '0xa', 'user_name' => 'test'),
+        'get' => array('cmd' => 'error'),
+        'expect' => array('text' => "@test, 0xa could be:\n\tERROR_BAD_ENVIRONMENT\n\tSTATUS_WAIT_0 + 10")
+    ),
+    array(
+        'name' => 'Translate',
+        'post' => array('token' => $config['translate_token'][0], 'text' => '0', 'user_name' => 'test'),
+        'get' => array('cmd' => 'x'),
+        'expect' => array('text' => "Invalid command")
+    ),
+    array(
+        'name' => 'Translate',
+        'post' => array('token' => $config['translate_token'][0], 'text' => '0', 'user_name' => 'test'),
+        'get' => array('cmd' => 'wm'),
+        'expect' => array('text' => "@test, 0 could be:\n\tWM_NULL")
+    ),
 );
 
 define("mattermost_plugin_test", 1);
 require_once("./jira.php");
+require_once("./translate.php");
 
 function test_object($args)
 {
@@ -70,7 +124,9 @@ function test_object($args)
         $test_result = "";
         foreach($diff as $key => $value)
         {
-            $test_result .= "Expected '$value' for '$key', got '$result[$key]'<br />";
+            $test_result .= "Wrong result for $key:\n";
+            $test_result .= "Expected '$value'\n";
+            $test_result .= "Got      '$result[$key]'\n";
         }
     }
     echo "<tr bgcolor='$color'>";
@@ -81,7 +137,7 @@ function test_object($args)
     }
     echo "<td>post = " . print_r($test_post, true) . "<br />";
     echo "get = " . print_r($test_get, true) . "</td>";
-    echo "<td>$test_result</td>";
+    echo "<td><pre>$test_result</pre></td>";
     echo "</tr>";
 }
 

@@ -109,8 +109,8 @@
 	<WindowMessage text="WM_NCXBUTTONUP" value="172" />
 	<WindowMessage text="WM_NCXBUTTONDBLCLK" value="173" />
 	<WindowMessage text="WM_NCMOUSEMOVE" value="160" />
-	<WindowMessage text="WM_NCMOUSEHOVER" value="0x02A0" />
-	<WindowMessage text="WM_NCMOUSELEAVE" value="0x02A2" />
+	<WindowMessage text="WM_NCMOUSEHOVER" value="672" />
+	<WindowMessage text="WM_NCMOUSELEAVE" value="674" />
 	<WindowMessage text="WM_NCPAINT" value="133" />
 	<WindowMessage text="WM_NCRBUTTONDBLCLK" value="166" />
 	<WindowMessage text="WM_NCRBUTTONDOWN" value="164" />
@@ -195,8 +195,8 @@
 	<WindowMessage text="WM_XBUTTONUP" value="524" />
 	<WindowMessage text="WM_XBUTTONDBLCLK" value="525" />
 	<WindowMessage text="WM_MOUSELAST" value="525" />
-	<WindowMessage text="WM_MOUSEHOVER" value="0x2A1" />
-	<WindowMessage text="WM_MOUSELEAVE" value="0x2A3" />
+	<WindowMessage text="WM_MOUSEHOVER" value="673" />
+	<WindowMessage text="WM_MOUSELEAVE" value="675" />
 	<WindowMessage text="WM_THEMECHANGED" value="794" />
 	<WindowMessage text="BM_CLICK" value="245" />
 	<WindowMessage text="BM_GETCHECK" value="240" />

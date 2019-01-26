@@ -1,6 +1,7 @@
 <?php
 
-require_once('./mattermost.php');
+$script_dir = dirname(__FILE__);
+require_once($script_dir . '/mattermost.php');
 
 class Jira extends Mattermost
 {

@@ -1,6 +1,7 @@
 <?php
 
-$config = require('./config.php');
+$src_dir = dirname(dirname(__FILE__))."/src/";
+$config = require($src_dir . 'config.php');
 
 // Update our 'config' array inline to hide tokens in case we use a 'real' config
 function update_config(&$config)
@@ -111,8 +112,8 @@ $tests = array(
 );
 
 define("mattermost_plugin_test", 1);
-require_once("./jira.php");
-require_once("./translate.php");
+require_once($src_dir . 'jira.php');
+require_once($src_dir . 'translate.php');
 
 
 final class Test extends PHPUnit\Framework\TestCase

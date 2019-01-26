@@ -1,6 +1,7 @@
 <?php
 
-require_once('./mattermost.php');
+$script_dir = dirname(__FILE__);
+require_once($script_dir . '/mattermost.php');
 
 class Translate extends Mattermost
 {
@@ -42,7 +43,8 @@ class Translate extends Mattermost
 
     function xml_entries($name)
     {
-        $xml = simplexml_load_file("./data/$name.xml");
+        global $script_dir;
+        $xml = simplexml_load_file($script_dir . "/data/$name.xml");
         $fmt = Translate::$xml_info[$name]['query'];
         $entries = array();
         foreach($xml->xpath(sprintf($fmt, $this->value)) as $entry)

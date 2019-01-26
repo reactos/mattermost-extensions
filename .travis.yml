@@ -1,0 +1,5 @@
+language: php
+php:
+  - 7.1
+before_script:
+  - cp -n src/config.php.example src/config.php

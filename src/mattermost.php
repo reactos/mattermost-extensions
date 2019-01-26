@@ -12,12 +12,14 @@ abstract class Mattermost
 
     function __construct($post = null, $get = null)
     {
+        $script_dir = dirname(__FILE__);
+
         $this->post_arg = $post ?? $_POST;
         $this->get_arg = $get ?? $_GET;
         $this->arg = trim($this->post('text'));
         $this->token = $this->post('token');
         $this->user = $this->post('user_name');
-        $this->config = require('./config.php');
+        $this->config = require($script_dir . '/config.php');
         $this->result['response_type'] = 'ephemeral';
         $this->result['text'] = '<No output>';
     }

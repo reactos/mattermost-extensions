@@ -43,17 +43,17 @@ $tests = array(
     ),
     array(
         'name' => 'Jira',
-        'expect' => array('text' => 'Url requested by : https://jira.reactos.org/browse/ROSBE-1'),
+        'expect' => array('text' => '@ requested `/jira ROSBE-1`: https://jira.reactos.org/browse/ROSBE-1'),
         'post' => array('token' => $config['jira_token'], 'text' => 'ROSBE-1'),
     ),
     array(
         'name' => 'Jira',
-        'expect' => array('text' => 'Url requested by : https://jira.reactos.org/browse/CORE-1'),
+        'expect' => array('text' => '@ requested `/jira CORE-1`: https://jira.reactos.org/browse/CORE-1'),
         'post' => array('token' => $config['jira_token'], 'text' => 'CORE-1'),
     ),
     array(
         'name' => 'Jira',
-        'expect' => array('text' => 'Url requested by test: https://jira.reactos.org/browse/CORE-1'),
+        'expect' => array('text' => '@test requested `/jira CORE-1`: https://jira.reactos.org/browse/CORE-1'),
         'post' => array('token' => $config['jira_token'], 'text' => 'CORE-1', 'user_name' => 'test'),
     ),
 
@@ -81,19 +81,19 @@ $tests = array(
     ),
     array(
         'name' => 'Translate',
-        'expect' => array('text' => "@, 0 could be:\n\tERROR_SUCCESS\n\tSTATUS_SUCCESS\n\tSTATUS_WAIT_0\n\tS_OK"),
+        'expect' => array('text' => "@ requested `/error 0`:\n\tERROR_SUCCESS\n\tSTATUS_SUCCESS\n\tSTATUS_WAIT_0\n\tS_OK"),
         'post' => array('token' => $config['translate_token'][0], 'text' => '0'),
         'get' => array('cmd' => 'error'),
     ),
     array(
         'name' => 'Translate',
-        'expect' => array('text' => "@, 0x0 could be:\n\tERROR_SUCCESS\n\tSTATUS_SUCCESS\n\tSTATUS_WAIT_0\n\tS_OK"),
+        'expect' => array('text' => "@ requested `/error 0x0`:\n\tERROR_SUCCESS\n\tSTATUS_SUCCESS\n\tSTATUS_WAIT_0\n\tS_OK"),
         'post' => array('token' => $config['translate_token'][0], 'text' => '0x0'),
         'get' => array('cmd' => 'error'),
     ),
     array(
         'name' => 'Translate',
-        'expect' => array('text' => "@test, 0xa could be:\n\tERROR_BAD_ENVIRONMENT\n\tSTATUS_WAIT_0 + 10"),
+        'expect' => array('text' => "@test requested `/error 0xa`:\n\tERROR_BAD_ENVIRONMENT\n\tSTATUS_WAIT_0 + 10"),
         'post' => array('token' => $config['translate_token'][0], 'text' => '0xa', 'user_name' => 'test'),
         'get' => array('cmd' => 'error'),
     ),
@@ -105,7 +105,7 @@ $tests = array(
     ),
     array(
         'name' => 'Translate',
-        'expect' => array('text' => "@test, 0 could be:\n\tWM_NULL"),
+        'expect' => array('text' => "@test requested `/wm 0`:\n\tWM_NULL"),
         'post' => array('token' => $config['translate_token'][0], 'text' => '0', 'user_name' => 'test'),
         'get' => array('cmd' => 'wm'),
     ),

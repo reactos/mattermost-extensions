@@ -63,7 +63,7 @@ class Translate extends Mattermost
         }
         if (!empty($results))
         {
-            $combined = "@$user, $arg could be:";
+            $combined = "@$user requested `/$this->cmd $arg`:";
             foreach($results as $result)
             {
                 $combined .= "\n\t$result";

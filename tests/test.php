@@ -109,6 +109,12 @@ $tests = array(
         'post' => array('token' => $config['translate_token'][0], 'text' => '0', 'user_name' => 'test'),
         'get' => array('cmd' => 'wm'),
     ),
+    array(
+        'name' => 'Translate',
+        'expect' => array('text' => "1111111 not found"),
+        'post' => array('token' => $config['translate_token'][0], 'text' => '1111111', 'user_name' => 'test'),
+        'get' => array('cmd' => 'wm'),
+    ),
 );
 
 define("mattermost_plugin_test", 1);

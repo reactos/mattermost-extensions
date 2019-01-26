@@ -58,9 +58,11 @@ abstract class Mattermost
         {
             return $this->result;
         }
+// @codeCoverageIgnoreStart
         header('Content-Type: application/json');
         echo json_encode($this->result);
     }
+// @codeCoverageIgnoreEnd
 
     abstract function process($user, $arg);
 }

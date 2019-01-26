@@ -3,3 +3,8 @@ php:
   - 7.1
 before_script:
   - cp -n src/config.php.example src/config.php
+  - composer require php-coveralls/php-coveralls
+  - composer install
+
+after_success:
+  - travis_retry php vendor/bin/php-coveralls -v

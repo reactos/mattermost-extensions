@@ -19,6 +19,8 @@ function update_config(&$config)
 }
 
 update_config($config);
+$gh_url = "https://github.com/reactos/reactos/commit/";
+$rg_url = "https://git.reactos.org/?p=reactos.git;a=commit;h=";
 
 $tests = array(
     array(
@@ -114,6 +116,37 @@ $tests = array(
         'expect' => array('text' => "1111111 not found"),
         'post' => array('token' => $config['translate_token'][0], 'text' => '1111111', 'user_name' => 'test'),
         'get' => array('cmd' => 'wm'),
+    ),
+
+    array(
+        'name' => 'Git',
+        'expect' => array('text' => "Invalid token"),
+        'post' => array(),
+    ),
+    array(
+        'name' => 'Git',
+        'expect' => array('text' => "Invalid commit hash"),
+        'post' => array('token' => $config['git_token']),
+    ),
+    array(
+        'name' => 'Git',
+        'expect' => array('text' => "Invalid commit hash"),
+        'post' => array('token' => $config['git_token'], 'text' => 'g'),
+    ),
+    array(
+        'name' => 'Git',
+        'expect' => array('text' => "Invalid commit hash"),
+        'post' => array('token' => $config['git_token'], 'text' => 'g123456'),
+    ),
+    array(
+        'name' => 'Git',
+        'expect' => array('text' => "@ requested `/git g1234567`:\n" . $gh_url . "1234567\n" . $rg_url . "1234567"),
+        'post' => array('token' => $config['git_token'], 'text' => 'g1234567'),
+    ),
+    array(
+        'name' => 'Git',
+        'expect' => array('text' => "@ requested `/git AAAAAAA`:\n" . $gh_url . "AAAAAAA\n" . $rg_url . "AAAAAAA"),
+        'post' => array('token' => $config['git_token'], 'text' => 'AAAAAAA'),
     ),
 );
 

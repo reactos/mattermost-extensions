@@ -21,6 +21,7 @@ function update_config(&$config)
 update_config($config);
 $gh_url = "https://github.com/reactos/reactos/commit/";
 $rg_url = "https://git.reactos.org/?p=reactos.git;a=commit;h=";
+$pr_url = "https://github.com/reactos/";
 
 $tests = array(
     array(
@@ -147,6 +148,53 @@ $tests = array(
         'name' => 'Git',
         'expect' => array('text' => "@ requested `/git AAAAAAA`:\n" . $gh_url . "AAAAAAA\n" . $rg_url . "AAAAAAA"),
         'post' => array('token' => $config['git_token'], 'text' => 'AAAAAAA'),
+    ),
+
+
+    array(
+        'name' => 'Pr',
+        'expect' => array('text' => "Invalid token"),
+        'post' => array(),
+    ),
+    array(
+        'name' => 'Pr',
+        'expect' => array('text' => "Invalid PR number"),
+        'post' => array('token' => $config['pr_token']),
+    ),
+    array(
+        'name' => 'Pr',
+        'expect' => array('text' => "Invalid PR number"),
+        'post' => array('token' => $config['pr_token'], 'text' => '#'),
+    ),
+    array(
+        'name' => 'Pr',
+        'expect' => array('text' => "Invalid PR number"),
+        'post' => array('token' => $config['pr_token'], 'text' => '#a'),
+    ),
+    array(
+        'name' => 'Pr',
+        'expect' => array('text' => "@ requested `/pr #1`:\n" . $pr_url . "reactos/pull/" . "1"),
+        'post' => array('token' => $config['pr_token'], 'text' => '#1'),
+    ),
+    array(
+        'name' => 'Pr',
+        'expect' => array('text' => "@ requested `/pr rapps-db#333333`:\n" . $pr_url . "rapps-db/pull/" . "333333"),
+        'post' => array('token' => $config['pr_token'], 'text' => 'rapps-db#333333'),
+    ),
+    array(
+        'name' => 'Pr',
+        'expect' => array('text' => "@ requested `/pr buildbot_config#123456789`:\n" . $pr_url . "buildbot_config/pull/" . "123456789"),
+        'post' => array('token' => $config['pr_token'], 'text' => 'buildbot_config#123456789'),
+    ),
+    array(
+        'name' => 'Pr',
+        'expect' => array('text' => "@ requested `/pr Qemu_GUI#1`:\n" . $pr_url . "Qemu_GUI/pull/" . "1"),
+        'post' => array('token' => $config['pr_token'], 'text' => 'Qemu_GUI#1'),
+    ),
+    array(
+        'name' => 'Pr',
+        'expect' => array('text' => "@ requested `/pr mESSAGE_tRANSLATOR#1`:\n" . $pr_url . "Message_Translator/pull/" . "1"),
+        'post' => array('token' => $config['pr_token'], 'text' => 'mESSAGE_tRANSLATOR#1'),
     ),
 );
 

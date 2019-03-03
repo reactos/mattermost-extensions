@@ -178,6 +178,11 @@ $tests = array(
     ),
     array(
         'name' => 'Pr',
+        'expect' => array('text' => "@ requested `/pr 1234`:\n" . $pr_url . "reactos/pull/" . "1234"),
+        'post' => array('token' => $config['pr_token'], 'text' => '1234'),
+    ),
+    array(
+        'name' => 'Pr',
         'expect' => array('text' => "@ requested `/pr rapps-db#333333`:\n" . $pr_url . "rapps-db/pull/" . "333333"),
         'post' => array('token' => $config['pr_token'], 'text' => 'rapps-db#333333'),
     ),

@@ -37,7 +37,7 @@ class Pr extends Mattermost
             return false;
 
         // Do our own validation
-        if (!preg_match('/^([a-z0-9-_]*)#?([0-9]+)$/i', $this->arg, $matches))
+        if (!preg_match('/^([a-z0-9-_]*?)#?([0-9]+)$/i', $this->arg, $matches))
         {
             $this->result['text'] = 'Invalid PR number';
             return false;

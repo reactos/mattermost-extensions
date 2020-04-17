@@ -22,7 +22,7 @@ class Jira extends Mattermost
 
     function process($user, $arg)
     {
-        $this->result['text'] = "@$user requested `/jira $arg`: https://jira.reactos.org/browse/$arg";
+        $this->result['text'] = "@$user requested `/jira-url $arg`: https://jira.reactos.org/browse/$arg";
         $this->result['response_type'] = "in_channel";
     }
 }
